@@ -38,31 +38,43 @@ data['clean_text'] = data['Text'].apply(clean_text)
 data.dropna(subset=['clean_text', 'Sentiment'], inplace=True)
 
 # ---- EXPLORATORY DATA ANALYSIS ----
-# Sentiment Distribution
+# Limit categories to top 10 most frequent
+top_sentiments = data['Sentiment'].value_counts().nlargest(10).index
+filtered_data = data[data['Sentiment'].isin(top_sentiments)]
+
 plt.figure(figsize=(8, 5))
-sns.countplot(x='Sentiment', data=data, palette='viridis')
-plt.title('Sentiment Distribution')
-plt.xlabel('Sentiment Category')
+sns.countplot(x='Sentiment', hue='Sentiment', data=filtered_data, palette='viridis', legend=False)
+plt.title('Top 10 Sentiment Categories')
+plt.xlabel('Sentiment')
 plt.ylabel('Count')
+plt.xticks(rotation=45)
+plt.tight_layout()
 plt.show()
 
 # Word Cloud for Sentiments
-all_words = ' '.join(data['clean_text'])
+all_words = ' '.join(filtered_data['clean_text'])
 wordcloud = WordCloud(width=800, height=400, background_color='white').generate(all_words)
 plt.figure(figsize=(10, 6))
 plt.imshow(wordcloud, interpolation='bilinear')
 plt.axis('off')
-plt.title("Most Common Words in Posts")
+plt.title("Most Common Words in Top 10 Sentiments")
 plt.show()
 
 # ---- TREND ANALYSIS OVER TIME ----
 if 'Year' in data.columns:
-    yearly_sentiment = data.groupby(['Year', 'Sentiment']).size().unstack(fill_value=0)
+    yearly_sentiment = (
+        filtered_data.groupby(['Year', 'Sentiment'])
+        .size()
+        .unstack(fill_value=0)
+    )
+    # Keep only top 10 columns (sentiments)
+    yearly_sentiment = yearly_sentiment[top_sentiments.intersection(yearly_sentiment.columns)]
     yearly_sentiment.plot(kind='line', figsize=(10, 6))
-    plt.title("Sentiment Trends Over the Years")
+    plt.title("Sentiment Trends Over the Years (Top 10 Sentiments)")
     plt.xlabel("Year")
     plt.ylabel("Number of Posts")
-    plt.legend(title="Sentiment")
+    plt.legend(title="Sentiment", bbox_to_anchor=(1.05, 1), loc='upper left')
+    plt.tight_layout()
     plt.show()
 
 # ---- FEATURE EXTRACTION ----
