@@ -38,8 +38,8 @@ SocialMediaSentimentAnalysis/
 │
 ├── main.py                      # Main Python script
 ├── README.md                    # Project documentation
-├── dataset/                     # Folder containing the Kaggle dataset
-│   └── social_media_sentiments.csv
+├── sentimentsdataset.csv        # The Kaggle dataset
+│   
 ├── output/
 │   ├── sentiment_distribution.png
 │   ├── top_hashtags.png
@@ -58,7 +58,7 @@ SocialMediaSentimentAnalysis/
    ```bash
    pip install -r requirements.txt
    ```
-5. Place your dataset (`social_media_sentiments.csv`) in the `dataset` folder.  
+5. Place your dataset (`sentimentsdataset.csv`) in the `dataset` folder.  
 6. Run the project:  
    ```bash
    python main.py
@@ -119,10 +119,3 @@ For clarity, only the **top 10 categories** are visualized in the following plot
 **IDE Used:** PyCharm  
 
 ---
-
-## 📚 References
-- Kaggle (2025). *Social Media Sentiments Analysis Dataset.*  
-- Rodríguez-Ibáñez, M., et al. (2023). *Advances in Social Media Sentiment Analysis.*  
-- Ramesh, D. et al. (2024). *Exploring Social Media Emotion Trends Using Machine Learning.*  
-- Scikit-learn Documentation (2024). *Machine Learning in Python.*  
-- NLTK Documentation (2024). *Natural Language Toolkit.*
