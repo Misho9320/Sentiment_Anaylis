@@ -41,6 +41,7 @@ SocialMediaSentimentAnalysis/
 ├── sentimentsdataset.csv        # The Kaggle dataset
 │   
 ├── output/
+│   ├── sentiment_predictions.csv
 │   ├── sentiment_distribution.png
 │   ├── top_hashtags.png
 │   ├── sentiment_trend.png
